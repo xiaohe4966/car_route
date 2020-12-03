@@ -1,0 +1,170 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>简易群聊天</title>
+</head>
+<body>
+	<h1 style="text-align: center">简易群聊天</h1>
+	<div class="wrap">
+		<div>你的昵称：<input type="text" name="name" id="name" value=""  style="width:20%;height:25px;"> </div>
+		<div><textarea style="width:100%;height:450px;margin-top: 2px;" id="textShow" readonly></textarea></div>
+		<p>内容：</p>
+		<div style="text-align:center">
+			<textarea style="width:100%;height:100px" id="textInput" placeholder="回车发送，shift+回车换行"></textarea>
+			<button id="btnSend">发送</button>
+		</div>
+
+		<p>Xiaohe_QQ496631085</p>
+	</div>
+	
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+        var wsUrl = 'ws://47.96.88.107:8081/ws'; // 修改为你的地址
+		function getNowFormatDate() {
+			var date = new Date();
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if (month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if (strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+				+ " " + date.getHours() + seperator2 + date.getMinutes()
+				+ seperator2 + date.getSeconds();
+			return currentdate;
+		}
+		function fuckXSS(val) {
+			var s = "";
+			if(val.length == 0) return "";
+			s = val.replace(/&/g,"&amp;");
+			s = s.replace(/</g,"&lt;");
+			s = s.replace(/>/g,"&gt;");
+			s = s.replace(/ /g,"&nbsp;");
+			s = s.replace(/\'/g,"&#39;");
+			s = s.replace(/\"/g,"&quot;");
+			return s;
+		};
+		
+		var messageCache = [];
+		$('#name').val(RndNum(4));
+
+		messageCache.push("连接中...\r\n");
+		var ws = new WebSocket(wsUrl);
+ 
+		ws.onopen = function(evt) {
+			console.log(evt)
+			messageCache.push("连接成功\r\n\r\n");
+			login();
+		};
+
+		ws.onmessage = function(evt) {
+			messageCache.push(getNowFormatDate() + "\r\n" + fuckXSS(evt.data.substring(0, 128)) + "\r\n\r\n");
+		};
+
+		setInterval(function(){
+			if(0 === messageCache.length)
+			{
+				return;
+			}
+			var message = messageCache.join("\r\n");
+			messageCache = [];
+			if($('#textShow').text().length >= 512 * 1024)
+			{
+				$('#textShow').text("消息过多，已清屏\r\n");
+			}
+
+			if(message.length > 512 * 1024)
+			{
+				$('#textShow').append("瞬时消息过大，不显示……\r\n");
+				return;
+			}
+
+			var isScroll = $('#textShow').innerHeight() + $('#textShow').scrollTop() === $('#textShow')[0].scrollHeight
+
+			$('#textShow').append(message);
+
+			if(isScroll)
+			{
+				$('#textShow').scrollTop($('#textShow')[0].scrollHeight);
+			}
+		}, 100); // 每100毫秒写入一次聊天记录
+		
+		ws.onclose = function(evt) {
+			messageCache.push("Connection closed\r\n");
+		};
+
+		function sendContent()
+		{
+			var message = $('#textInput').val();
+			var name = $('#name').val();
+			if(message === '')
+			{
+				return;
+			}
+			// 发送
+			var data = {
+				action: 'send2',
+				username: name,
+				message: message,
+			};
+			ws.send(JSON.stringify(data));
+			$('#textInput').focus().val('');
+		}
+		function RndNum(n){   
+    
+		var rnd="";   
+			
+		for(var i=0;i<n;i++)   
+			
+		rnd+=Math.floor(Math.random()*10);   
+			
+		return rnd;   
+			
+		} 
+
+
+
+		function login()
+		{
+			var message = 'login';//$('#textInput').val();
+			var name = $('#name').val();
+			if(message === '')
+			{
+				return;
+			}
+			// 发送
+			var data = {
+				action: 'login',
+				username: name,
+				message: message,
+			};
+			ws.send(JSON.stringify(data));
+			$('#textInput').focus().val('');
+		}
+
+		$('#btnSend').click(sendContent);
+		$('#textInput').on('keydown', function(e){
+			if(e.keyCode == 13 && (!e.altKey && !e.ctrlKey && !e.shiftKey))
+			{
+				// 避免回车键换行
+				e.preventDefault();
+				// 下面写你的发送消息的代码
+				sendContent();
+			}
+		})
+	</script>
+
+	<style>
+	.wrap{
+		width: 1000px;
+		margin: 0 auto;
+	}
+	</style>
+</body>
+</html>

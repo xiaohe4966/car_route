@@ -1,0 +1,64 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Uid')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-uid" class="form-control" name="row[uid]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Saddr')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-saddr" class="form-control" name="row[saddr]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Eaddr')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-eaddr" class="form-control" name="row[eaddr]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Stime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-stime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[stime]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Etime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-etime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[etime]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tel')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-tel" class="form-control" name="row[tel]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="statusList" item="vo"}
+            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="0"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ps')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ps" class="form-control" name="row[ps]" type="text">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'Uid'          => '用户id',
+    'Saddr'        => '上车地址',
+    'Eaddr'        => '下车地址',
+    'Stime'        => '上车时间',
+    'Createtime'   => '创建时间',
+    'Tel'          => '电话',
+    'Status'       => '状态',
+    'Status 0'     => '未读',
+    'Status 1'     => '已读',
+    'Status 2'     => '已处理',
+    'Status 3'     => '备注',
+    'Order'        => '订单号',
+    'Ps'           => '备注',
+    'Updatetime'   => '修改时间',
+    'S_id'         => '上车地址id',
+    'Routeid'      => '路线id',
+    'Paytime'      => '支付时间',
+    'Pay_status'   => '状态',
+    'Pay_status 0' => '待支付',
+    'Pay_status 1' => '已支付',
+    'Pay_status 2' => '超时',
+    'Pay_status 3' => '已退款',
+    'Tk_order'     => '退款单号',
+    'Price'        => '价格',
+    'Money'        => '实际支付价格',
+    'Cou_id'       => '优惠券id'
+];

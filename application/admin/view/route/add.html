@@ -1,0 +1,104 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" class="form-control" name="row[name]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Saddr')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <!-- <input id="c-saddr" class="form-control" name="row[saddr]" type="text"> -->
+
+            <select name="row[s_id]" id="c-saddr" class="form-control" >
+
+                <option value="" selected="">请选择起点地址</option>
+                {foreach name="addr" item="vo"}                
+                 <option value="{$vo.id}">{$vo.addr}</option>
+                {/foreach}
+                
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Eaddr')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <!-- <input id="c-eaddr" class="form-control" name="row[eaddr]" type="text"> -->
+            <select name="row[e_id]" id="c-saddr" class="form-control" >
+
+                <option value="" selected="">请选择终点地址</option>
+                {foreach name="addr" item="vo"}                
+                 <option value="{$vo.id}">{$vo.addr}</option>
+                {/foreach}
+                
+            </select>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Stime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-stime" class="form-control datetimepicker" data-date-format="HH:mm" data-use-current="true" name="row[stime]" type="text" value="{:date('H:i')}">
+        </div>
+    </div> -->
+
+
+    <!-- <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Stime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-stime_id" data-rule="required" data-field="time" data-source="stime/index" class="form-control selectpage" data-multiple="true" data-order-by="time" name="row[stime_id]" type="text" value="">
+        </div>
+    </div>
+     -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Alltime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-alltime" class="form-control" step="1" name="row[alltime]" type="number" value="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ren_num')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ren_num" class="form-control" step="1" name="row[ren_num]" type="number" value="" placeholder="可乘车人数，发车日期里可更改此人数">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Type_status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="typeStatusList" item="vo"}
+            <label for="row[type_status]-{$key}"><input id="row[type_status]-{$key}" name="row[type_status]" type="radio" value="{$key}" {in name="key" value="2"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">站点名称</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-type_id" data-rule="required" data-field="type_name" data-source="route_type/index" class="form-control selectpage" name="row[type_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group" id="t-price">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-price" class="form-control" step="0.01" name="row[price]" type="number" value="0.00">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ps')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ps" class="form-control" name="row[ps]" type="text">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
