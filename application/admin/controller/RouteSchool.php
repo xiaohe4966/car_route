@@ -47,29 +47,36 @@ class RouteSchool extends Backend
         $this->request->filter(['strip_tags', 'trim']);
         if ($this->request->isAjax())
         {
+            
             //如果发送的来源是Selectpage，则转发到Selectpage
             if ($this->request->request('keyField'))
             {
+                
                 return $this->selectpage();
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
-                    ->with(['addrschool','route','user','couponsuser','stime'])
+                    ->with(['addrschool','addrschool2','route','user','couponsuser','stime',])//加入了addrschool2
                     ->where($where)
                     ->order($sort, $order)
                     ->count();
-
+            
             $list = $this->model
-                    ->with(['addrschool','route','user','couponsuser','stime'])
+                    ->with(['addrschool','addrschool2','route','user','couponsuser','stime'])//加入了addrschool2
                     ->where($where)
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
 
+            
+                
+            
             foreach ($list as $row) {
                 $row->visible(['id','uid','createtime','tel','status','order','updatetime','e_id','s_id','routeid','paytime','pay_status','tk_order','price','money','cou_id','stime_id','stime_date','tk_money','tk_time','scan_time','scan_status','num']);
                 $row->visible(['addrschool']);
-				$row->getRelation('addrschool')->visible(['addrname']);
+                $row->getRelation('addrschool')->visible(['addrname']);
+                $row->visible(['addrschool2']);//加入的
+				$row->getRelation('addrschool')->visible(['addrname']);//加入的  QQ496631085
 				$row->visible(['route']);
 				$row->getRelation('route')->visible(['name','type_status']);
 				$row->visible(['user']);
@@ -79,6 +86,12 @@ class RouteSchool extends Backend
 				$row->visible(['stime']);
 				$row->getRelation('stime')->visible(['time']);
             }
+
+
+            
+
+
+
             $list = collection($list)->toArray();
             $result = array("total" => $total, "rows" => $list);
 

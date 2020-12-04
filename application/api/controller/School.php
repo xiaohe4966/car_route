@@ -322,7 +322,7 @@ class School extends Xiaohe
         if($type_id){
             $type_id = ['type_id'=>$type_id];
         }
-        $list = Db::name('route')->where('status_switch',1)->where($type_id)->select();
+        $list = Db::name('route')->where('status_switch',1)->where($type_id)->order('weigh desc')->select();
         foreach ($list as $key => $val) {
             $list[$key]['s_addr'] = $this->addr_school[$list[$key]['s_id']];
             $list[$key]['e_addr'] = $this->addr_school[$list[$key]['e_id']];

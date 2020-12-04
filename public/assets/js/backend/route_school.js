@@ -51,19 +51,24 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         
                         
                         // {field: 's_id', title: __('S_id'),operate:false},
-                        {field: 'addrschool.addrname', title: __('Addrschool.addrname'),operate:false},
+                        {field: 'addrschool.addrname', title: '上车地址'},//__('Addrschool.addrname')
+                        {field: 'addrschool2.addrname', title: '下车地址'},
                         // {field: 'e_id', title: __('E_id'),operate:false},
 
-                        {field: 'routeid', title: __('Routeid'),
+                        // {field: 'routeid', title: __('Routeid'),
+                        //     cellStyle: function (value, row, index) {
+                        //         return {css: {"background-color": "rgb(24,188,156)"}};
+                        //     }    
+                        // },
+                        {field: 'route.name', title: __('Route.name'),
                             cellStyle: function (value, row, index) {
                                 return {css: {"background-color": "rgb(24,188,156)"}};
-                            }    
+                            } 
                         },
-                        {field: 'route.name', title: __('Route.name'),operate:false},
                         // {field: 'route.type_status', title: __('Route.type_status'), formatter: Table.api.formatter.status,operate:false},
 
                         
-                        {field: 'pay_status', title: __('Pay_status'),operate:false, searchList: {"0":__('Pay_status 0'),"1":__('Pay_status 1'),"2":__('Pay_status 2'),"3":__('Pay_status 3'),"4":__('Pay_status 4')}, formatter: Table.api.formatter.status},
+                        {field: 'pay_status', title: __('Pay_status'), searchList: {"0":__('Pay_status 0'),"1":__('Pay_status 1'),"2":__('Pay_status 2'),"3":__('Pay_status 3'),"4":__('Pay_status 4')}, formatter: Table.api.formatter.status},
                         {field: 'num', title: __('Num'),operate:false,
                             cellStyle: function (value, row, index) {
 
@@ -93,12 +98,18 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'tk_money', title: __('Tk_money'), operate:'BETWEEN',operate:false},
                         {field: 'tk_time', title: __('Tk_time'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime,operate:false},
 
-                        {field: 'stime_id', title: __('Stime_id'),
-                            cellStyle: function (value, row, index) {
-                                return {css: {"background-color": "rgb(24,188,156)"}};
-                            } 
+                        {field: 'stime_id', title: '乘车时间',//__('Stime_id')
+                            // cellStyle: function (value, row, index) {
+                            //     return {css: {"background-color": "rgb(24,188,156)"}};
+                            // } ,
+                            searchList: $.getJSON('/api/com/get_stime_list')
                         },
-                        {field: 'stime.time', title: __('Stime.time'),operate:false},//, operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime
+                        {field: 'stime.time', title: __('Stime.time'),
+                        cellStyle: function (value, row, index) {
+                            return {css: {"background-color": "rgb(24,188,156)"}};
+                        } ,
+                        
+                        operate:false},//, operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime
                         {field: 'stime_date', title: __('Stime_date'),
                             cellStyle: function (value, row, index) {
                                 return {css: {"background-color": "rgb(24,188,156)"}};

@@ -34,6 +34,21 @@ class Com extends Api
     }
 
 
+
+    /* 
+    * @Description: //后台选项需要用 校园退款 搜索下拉
+    * @return: 
+    */     
+    public function get_stime_list()
+    {
+       $list = Db::name('stime')->column('time','id');
+       foreach ($list as $key => $value) {
+           $list[$key]= date('H:i',$value);
+       }
+         return json($list);
+    }
+
+
     /* 
     * @Description: 获取支付app
     * @return: 

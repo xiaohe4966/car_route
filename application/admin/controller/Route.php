@@ -176,6 +176,9 @@ class Route extends Backend
             }
             $this->error(__('Parameter %s can not be empty', ''));
         }
+
+        $weigh = Db::name('route')->max('weigh');
+        $this->view->assign("weigh", $weigh+1);
         $addr = Db::name('addr_school')->select();
         $this->view->assign("addr", $addr);
         return $this->view->fetch();

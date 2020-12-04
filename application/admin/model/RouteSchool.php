@@ -129,6 +129,15 @@ class RouteSchool extends Model
         return $this->belongsTo('AddrSchool', 's_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }
 
+    
+
+
+
+    public function addrschool2()
+    {
+        return $this->belongsTo('AddrSchool', 'e_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
+
 
     public function route()
     {
